@@ -1,4 +1,4 @@
-# Task 1
+# Unique gene_type descriptors
 
 Source: https://stepik.org/lesson/32402/step/12?unit=12385
 
