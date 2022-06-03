@@ -12,6 +12,26 @@ cut -f9 gencode.v25.primary_assembly.annotation.gtf | awk -F "; " '{ print $2 }'
 ```
 
 
+# The ratio of protein-coding regions
+
+Source: https://stepik.org/lesson/32402/step/13?unit=12385
+
+[Dowload](https://www.gencodegenes.org/human/release_25.html) Human genome release 25 GTF annotation marked as primary and containing all chromosomes and scaffolds, but not containing alternate loci.
+1. Calculate the total coverage of protein-coding regions presented in the annotation with accuracy to a single nucleotide.
+2. Calculate the total coverage of protein-coding genes' exons presented in the annotation with accuracy to a single nucleotide.
+3. Calculate the ratio of nucleotides covering the protein-coding regions to nucleotides of protein-coding genes' exons.
+
+Solution:
+
+```
+cat gencode.v25.primary_assembly.annotation.gtf | awk '{if ($14 ~ /protein_coding/ && $3=="CDS") print}' | gtf2bed | bedtools merge | awk '{sum+=($3-$2)} END {print sum}'
+
+cat gencode.v25.primary_assembly.annotation.gtf | awk '{if ($14 ~ /protein_coding/ && $3 == "exon") print}' | gtf2bed | bedtools merge | awk '{sum+=($3-$2)} END {print sum}'
+
+# Then divide the second number on the first one, multiply by 100 and round to the whole.
+```
+
+
 # The longes exon in a protein-coding gene
 
 Source: https://stepik.org/lesson/32402/step/14?unit=12385
@@ -24,3 +44,7 @@ Solution:
 ```
 awk '{if ($14 ~ /protein_coding/ && $3=="exon") print}' gencode.v25.primary_assembly.annotation.gtf | awk '{$6 = $5-$4; print}' | sort -nk6 -r | awk 'NR==1{print $18,$6}'
 ```
+
+
+
+
