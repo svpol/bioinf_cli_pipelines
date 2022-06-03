@@ -22,5 +22,5 @@ Find the longest exon being a part of a proteing-coding gene. The task is to pro
 Solution:
 
 ```
-awk '{if ($14 ~ /protein_coding/) print}' gencode.v25.primary_assembly.annotation.gtf | awk '{if ($3 == "exon") print}' |  awk '{$6 = $5-$4; print}' | sort -nk6 -r | awk 'NR==1{print $18,$6}'
+awk '{if ($14 ~ /protein_coding/ && $3=="exon") print}' gencode.v25.primary_assembly.annotation.gtf | awk '{$6 = $5-$4; print}' | sort -nk6 -r | awk 'NR==1{print $18,$6}'
 ```
