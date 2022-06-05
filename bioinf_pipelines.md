@@ -24,9 +24,9 @@ Source: https://stepik.org/lesson/32402/step/13?unit=12385
 Solution:
 
 ```
-cat gencode.v25.primary_assembly.annotation.gtf | awk '{if ($14 ~ /protein_coding/ && $3=="CDS") print}' | gtf2bed | bedtools merge | awk '{sum+=($3-$2)} END {print sum}'
+awk '{if ($14 ~ /protein_coding/ && $3=="CDS") print}' gencode.v25.primary_assembly.annotation.gtf | gtf2bed | bedtools merge | awk '{sum+=($3-$2)} END {print sum}'
 
-cat gencode.v25.primary_assembly.annotation.gtf | awk '{if ($14 ~ /protein_coding/ && $3 == "exon") print}' | gtf2bed | bedtools merge | awk '{sum+=($3-$2)} END {print sum}'
+awk '{if ($14 ~ /protein_coding/ && $3 == "exon") print}' gencode.v25.primary_assembly.annotation.gtf | gtf2bed | bedtools merge | awk '{sum+=($3-$2)} END {print sum}'
 
 # Then divide the second number on the first one, multiply by 100 and round to the whole.
 ```
