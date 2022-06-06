@@ -45,6 +45,17 @@ Solution:
 awk '{if ($14 ~ /protein_coding/ && $3=="exon") print}' gencode.v25.primary_assembly.annotation.gtf | awk '{$6 = $5-$4; print}' | sort -nk6 -r | awk 'NR==1{print $18,$6}'
 ```
 
+# C.elegans autosome length
 
+Source: https://stepik.org/lesson/32398/step/15?unit=12379
 
+Find and [download](http://ftp.ensembl.org/pub/release-86/fasta/caenorhabditis_elegans/dna/) Caenorhabditis elegans genome assembly 86, toplevel, unmasked. 
+Index it and then calculate the total length of autosomes with accuracy to a single nucleotide.
 
+Solution:
+
+```
+# For convenience the downloaded assembly was renamed to "ce_86.fa"
+samtools faidx ce_86.fa
+awk '{if ($1!="MtDNA" && $1!="X") sum+=$2} END {print sum}' ce_86.fa.fai
+```
